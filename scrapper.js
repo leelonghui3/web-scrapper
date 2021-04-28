@@ -9,7 +9,7 @@ const PAGE =
   'https://en.wikipedia.org/wiki/List_of_federal_agencies_in_Malaysia'
 
 const hasLink = link => {
-  if (link) {
+  if (!link) {
     return false
   }
   return true
@@ -28,9 +28,8 @@ const scrapePage = async () => {
       const link = $(el)
         .find('a')
         .attr('href')
-      // .replace(/,/, '')
 
-      writeStream.write(`${name},${!!link ? link : null}\n`)
+      writeStream.write(`${name},${hasLink(link) ? link : null}\n`)
     })
   } catch (error) {
     console.log(error)
